@@ -1,4 +1,7 @@
-lista = ["k", "c", "b", "p", "a", "d"]
+inten = 949
+stringen = str(inten)
 
-while lista:
-    print(lista.pop())
+if len(stringen) < 3:
+    print(0)
+else:
+    print(stringen[-3])
