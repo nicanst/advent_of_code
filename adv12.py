@@ -1,4 +1,4 @@
-init_state = "#..#.#..##......###...###"
+init_state = "##.......#.######.##..#...#.#.#..#...#..####..#.##...#....#...##..#..#.##.##.###.##.#.......###....#"
 test1 = "...##"
 
 # print(file_lines[1][0:5])
@@ -17,9 +17,9 @@ def next_generation(state):
 
     first_key = None
     last_key = None
-    for key in sorted(pots.keys()):
-        first_key = key if first_key == None else first_key
-        last_key = key if last_key == None or last_key < key else last_key
+    for k in sorted(pots.keys()):
+        first_key = k if first_key == None else first_key
+        last_key = k if last_key == None or last_key < k else last_key
 
     for a in range(last_key + 1, last_key + 6):
         pots[a] = "."
@@ -30,36 +30,47 @@ def next_generation(state):
     #    print(key, pots[key])
 
     return_dick = {}
-    path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv12-short.txt"
+    path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv12.txt"
     with open(path) as file:
         file_lines = file.read().splitlines()
     for key in sorted(pots.keys()):
+        # print(key)
         part_of_line = ""
-        is_in = False
+        is_in_dot = False
+        is_in_hash = False
         if (key - 2) in pots and (key + 2) in pots:
-            for k in range(key - 2, key + 3):
-                part_of_line += pots[k]
+            for k2 in range(key - 2, key + 3):
+                #print("k2", k2)
+                #print(pots[k2])
+                part_of_line += pots[k2]
             for line in file_lines:
                 #print(key, part_of_line, line[0:5], " ", end="")
-                if part_of_line == line[0:5]:
-                    #print("3","match", end="")
-                    is_in = True
-                #print()
-        if is_in:
+                if line[9:10] == "#" and part_of_line == line[0:5]:
+                    is_in_hash = True
+                if line[9:10] == "." and part_of_line == line[0:5]:
+                    is_in_dot = True
+        if is_in_hash:
             return_dick[key] = "#"
-        else:
+        if is_in_dot:
+            return_dick[key] = "."
+        if not is_in_hash and not is_in_dot:
             return_dick[key] = "."
     return return_dick
 
 
 
 g = next_generation(init_state)
+for d in sorted(g.keys()):
+    print(d, g[d])
 for _ in range(19):
+    print("generation",_)
     g = next_generation(g)
-
-for key in sorted(g.keys()):
-    if key > -1:
-        print(g[key], end="")
+#
+plant_id_sum = 0
+for ke in sorted(g.keys()):
+    if g[ke] == "#":
+        plant_id_sum += ke
+print(plant_id_sum)
 
 #     first_key = None
 #     last_key = None
