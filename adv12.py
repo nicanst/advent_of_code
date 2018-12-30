@@ -5,6 +5,13 @@ test1 = "...##"
 # print(file_lines[1][9:10], end="")
 
 def generationizer(init_state_string):
+    if type(init_state_string) is not str:
+        temp_string = ""
+        for key in sorted(init_state_string.keys()):
+            temp_string += init_state_string[key]
+        init_state_string = temp_string
+
+
     path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv12-short.txt"
     with open(path) as file:
         file_lines = file.read().splitlines()
@@ -38,7 +45,8 @@ def generationizer(init_state_string):
     return return_dick
 
 gen1 = generationizer(init_state)
-gen1 = generationizer(init_state)
+gen2 = generationizer(gen1)
 
-for key2 in sorted(gen1.keys()):
-    print(gen1[key2], end="")
+for key2 in sorted(gen2.keys()):
+    if key2 == 0: print("0", end="")
+    print(gen2[key2], end="")
