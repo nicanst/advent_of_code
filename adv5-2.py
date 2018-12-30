@@ -1,4 +1,4 @@
-path = r"C:\Users\Herman\test_git\ad5-short.txt"
+path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\ad5-short.txt"
 li = []
 with open(path) as f:
     while True:

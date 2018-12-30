@@ -1,4 +1,4 @@
-path = r"C:\Users\Herman\test_git\adv7.txt"
+path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv7.txt"
 
 def remove_stuff(dick, to_remove):
     for key, val in dick.items():

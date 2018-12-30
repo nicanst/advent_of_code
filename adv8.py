@@ -1,4 +1,4 @@
-path = r"C:\Users\Herman\test_git\adv8-short.txt"
+path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv8-short.txt"
 
 
 with open(path) as f:

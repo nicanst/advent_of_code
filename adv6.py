@@ -1,4 +1,4 @@
-path = r"C:\Users\Herman\test_git\adv6-short.txt"
+path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv6-short.txt"
 
 with open(path) as f:
     txt = f.read().splitlines()
