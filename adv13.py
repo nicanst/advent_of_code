@@ -25,7 +25,7 @@ def print_path(positions):
 
 def step_forward(positions):
 
-    path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv13-short.txt"
+    path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv13.txt"
 
     with open(path) as file:
         file_lines = file.read().splitlines()
@@ -111,7 +111,7 @@ def step_forward(positions):
     return positions
 
 
-path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv13-short.txt"
+path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv13.txt"
 
 with open(path) as file:
     file_lines = file.read().splitlines()
@@ -123,10 +123,8 @@ for y, line in enumerate(file_lines):
         if ch in all:
             positions.append({"x": x, "y": y, "d": ch, "t": "le"})
 
-print_path(positions)
 pos1 = step_forward(positions)
-print_path(pos1)
-for _ in range(30):
+for _ in range(1000):
     pos1 = step_forward(pos1)
     for idxa, a in enumerate(pos1):
         for idxb, b in enumerate(pos1):
