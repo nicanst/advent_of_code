@@ -1,4 +1,4 @@
 position=< 41660,  20869> velocity=<-4, -2>
-position=< 41617,  10491> velocity=<-4, -1>
+position=<-41617,  10491> velocity=<-4, -1>
 position=< 41669, -10244> velocity=<-4,  1>
 position=< 10509, -41348> velocity=<-1,  4>

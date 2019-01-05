@@ -1,0 +1,11 @@
+2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2
+1. skriv till nodestack
+2. skriv till enteries-stack
+3A. Om sista i node är 0:
+    skriv till enterie
+    pop sista i nodestack
+3B  Om sista i node >0:
+    gå till 1
+    minska sista node i nodestack
+    om sista i node = 0
+    pop sista node
