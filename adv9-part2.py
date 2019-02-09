@@ -1,40 +1,29 @@
-def game(p, last_marble):
-    circle = [0]
-    scores = [0 for _ in range(p + 1)]
+from collections import deque
+def game(p, last_marble, printa = False):
+    circle = deque([0])
+    circle2 = deque([0])
+    scores = [0 for _ in range(1, p + 2)]
+    # print(scores)
     current = None
     players = p
     player = 1
-    for marble in range(1, last_marble):
+
+    for marble in range(1, last_marble + 1):
         if len(circle) == 1:
             circle.append(marble)
-            current = 1
         else:
             if marble % 23 == 0:
-                if (current - 7) >= 0:
-                    current -= 7
-                    temp = circle.pop(current)
-                    scores[player] += temp
-                    scores[player] += marble
-                    print(f"Pop: {temp}, Marble: {marble}, Sum: {temp + marble}")
-                else:
-                    current = len(circle) + (current - 7)
-                    temp = circle.pop(current)
-                    scores[player] += temp
-                    scores[player] += marble
-                    if current == len(circle):
-                        current = 0
-                    print(f"Pop: {temp}, Marble: {marble}, Sum: {temp + marble}")
+                for _ in range(7):
+                    temp = circle.pop()
+                    circle.appendleft(temp)
+                scores[player] += circle.pop() + marble
+                temp = circle.popleft()
+                circle.append(temp)
             else:
-                if current + 2 == len(circle):
-                    circle.append(marble)
-                    current = len(circle) - 1
-                elif current + 2 > len(circle):
-                    circle.insert(1, marble)
-                    current = 1
-                else:
-                    circle.insert(current + 2, marble)
-                    current += 2
-        # print(player, end=" | ")
+                temp = circle.popleft()
+                circle.append(temp)
+                circle.append(marble)
+        if printa: print(player, end=" | ")
         if player == None:
             player = 1
         elif player >= players:
@@ -42,12 +31,14 @@ def game(p, last_marble):
         else:
             player += 1
 
-        # for idx, elem in enumerate(circle):
-        #     if idx == current:
-        #         print(f"[{elem}]", end=", ")
-        #     else:
-        #         print(elem, end=", ")
-    # print(max(scores))
+        if printa:
+            for idx, elem in enumerate(circle):
+                if idx == current:
+                    print(f"[{elem}]", end=", ")
+                else:
+                    print(elem, end=", ")
+            print()
+    print(f"Max: {max(scores)}")
 #Game input: 477 players; last marble is worth 70851 points
 # game(477, 70851)
 # game(477, 70851*2)
@@ -56,4 +47,4 @@ def game(p, last_marble):
 # 374690
 # 1365586
 # 5123352
-game(477, 1000)
+game(477, 70851*100)

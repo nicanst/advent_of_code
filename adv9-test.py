@@ -4,6 +4,7 @@ def game(p, last_marble):
     current = None
     players = p
     player = 1
+    poppade = []
     for marble in range(1, last_marble):
         if len(circle) == 1:
             circle.append(marble)
@@ -12,11 +13,15 @@ def game(p, last_marble):
             if marble % 23 == 0:
                 if (current - 7) >= 0:
                     current -= 7
-                    scores[player] += circle.pop(current)
+                    temp = circle.pop(current)
+                    poppade.append(temp)
+                    scores[player] += temp
                     scores[player] += marble
                 else:
                     current = len(circle) + (current - 7)
-                    scores[player] += circle.pop(current)
+                    temp = circle.pop(current)
+                    poppade.append(temp)
+                    scores[player] += temp
                     scores[player] += marble
                     if current == len(circle):
                         current = 0
@@ -38,6 +43,8 @@ def game(p, last_marble):
         else:
             player += 1
 
+    print(sorted(poppade))
+
         # for idx, elem in enumerate(circle):
         #     if idx == current:
         #         print(f"[{elem}]", end=", ")
@@ -46,7 +53,7 @@ def game(p, last_marble):
         # print()
     print(max(scores))
 #Game input: 477 players; last marble is worth 70851 points
-game(477, 70851*100)
+game(7,5000)
 # game(477, 70851)
 # game(477, 70851*2)
 # game(477, 70851*4)
