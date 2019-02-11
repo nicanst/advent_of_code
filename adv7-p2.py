@@ -1,7 +1,10 @@
 import copy
 import pprint
+import string
 
-path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv7.txt"
+
+
+path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv7-short.txt"
 
 def remove_step(remove_from, remove_this_step):
     for id, steps in remove_from.items():
@@ -24,8 +27,8 @@ for line in lines:
     if step_before not in steps[step_to_do]:
         steps[step_to_do].append(step_before)
 
-# pp = pprint.PrettyPrinter(indent=4)
-# pp.pprint(steps)
+pp = pprint.PrettyPrinter(indent=4)
+pp.pprint(steps)
 
 steps_original = copy.deepcopy(steps)
 
@@ -47,5 +50,27 @@ while continue_:
     if steps == {}:
         continue_ = False
 
-for step in step_queue:
-    print(step, end="")
+steps = copy.deepcopy(steps_original)
+workers = [{"task": '', "time": 0} for _ in range(2)]
+
+task_times = {ch: num + 1 for num, ch in enumerate(string.ascii_uppercase)}
+# print(task_times['Z'])
+
+continue_ = True
+timer = 0
+finished_tasks = []
+to_do_tasks = copy.deepcopy(step_queue)
+# print(to_do_tasks)
+# print(steps)
+# for pending_step, steps_before in steps.items():
+#     print("d",pending_step, steps_before)
+
+for pending_step, steps_before in steps.items():
+    if steps_before == []:
+        for id, worker in enumerate(workers):
+            if worker["task"] == '':
+                workers[id]["task"] = pending_step
+                workers[id]["time"] = task_times[pending_step]
+                print("d-",pending_step)
+                to_do_tasks.remove(pending_step)
+# print(workers)

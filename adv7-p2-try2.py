@@ -1,5 +1,6 @@
 import copy
 import pprint
+import string
 
 path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv7.txt"
 
@@ -23,7 +24,7 @@ for line in lines:
         steps[step_before] = []
     if step_before not in steps[step_to_do]:
         steps[step_to_do].append(step_before)
-
+#
 # pp = pprint.PrettyPrinter(indent=4)
 # pp.pprint(steps)
 
@@ -47,5 +48,23 @@ while continue_:
     if steps == {}:
         continue_ = False
 
-for step in step_queue:
-    print(step, end="")
+steps = copy.deepcopy(steps_original)
+workers = [{"task": '', "time": 0} for _ in range(5)]
+
+task_times = {ch: num + 61 for num, ch in enumerate(string.ascii_uppercase)}
+
+q = [pending_step for pending_step, steps_before in steps.items() if steps_before == []]
+for a in q: del steps[a]
+
+for worker_id, worker in enumerate(workers):
+    if worker["task"] == '' and q != []:
+        workers[worker_id]["task"] = q.pop()
+        workers[worker_id]["time"] = task_times[workers[worker_id]["task"]]
+
+print(workers)
+
+
+
+# print(workers)
+# pp = pprint.PrettyPrinter(indent=4)
+# pp.pprint(steps)
