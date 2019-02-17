@@ -1,10 +1,11 @@
-path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv17.txt"
+path = r"C:\Users\Herman\Desktop\PROGRAMMERING\Projekt\Advent_of_code\adv17-short.txt"
 
 def p(map_of_ground):
-    for y in range(100):
-        for x in range(450,550):
+    for y in range(15):
+        for x in range(490,510):
             print(map_of_ground[(x, y)], end="")
         print()
+    print()
 
 with open(path) as f:
     lines = f.read().splitlines()
@@ -29,11 +30,11 @@ for line in lines:
             map_column[col] = []
         map_column[col].append((from_,to_))
 
-print(map_column,map_row)
+# print(map_column,map_row)
 
 map_of_ground = {}
-for x in range(700):
-    for y in range(600):
+for x in range(470,515):
+    for y in range(20):
         if x in map_column:
             xexist = False
             for range_ in map_column[x]:
@@ -53,7 +54,7 @@ for x in range(700):
         if (x,y) not in map_of_ground:
             map_of_ground[(x, y)] = "."
 
-    print()
+    # print()
 
 map_of_ground[(500, 0)] = "+"
 
@@ -64,31 +65,122 @@ def up(p): return (p[0], p[1] - 1)
 def left(p): return (p[0] - 1, p[1])
 def right(p): return (p[0] + 1, p[1])
 
-# for a in range(55):
-#     if map_of_ground[down(point)] == ".":
-#         point = down(point)
-#         map_of_ground[point] = "~"
-#         # print(1)
-#     elif map_of_ground[left(point)] != "#":
-#         point = left(point)
-#         map_of_ground[point] = "~"
-#         # print(2)
-#     else:
-#         continue_ = True
-#         while continue_:
-#             if map_of_ground[down(point)] == ".":
-#                 # print(3)
-#                 continue_ = False
-#             elif map_of_ground[right(point)] == "#":
-#                 # print(4)
-#                 point = up(point)
-#                 continue_ = False
-#             else:
-#                 point = right(point)
-#                 map_of_ground[point] = "~"
-#                 print(point)
+def go_down(point, map_of_ground):
+    x, y = point
+    if y < 16:
+        continue_ = True
+        while continue_:
+            x, y = down(point)
+            if y < 16:
+                if map_of_ground[down(point)] == ".":
+                    point = down(point)
+                    map_of_ground[point] = "|"
+                else:
+                    continue_ = False
+                    return point
+            else:
+                return None
+    else:
+        return None
 
+def go_right(point, map_of_ground):
+    continue_ = True
+    while continue_:
+        if map_of_ground[down(point)] == ".":
+            continue_ = False
+            return (".", point)
+        elif map_of_ground[right(point)] != "#":
+            point = right(point)
+            if map_of_ground[point] == ".":
+                map_of_ground[point] = "|"
+            else:
+                map_of_ground[point] = "~"
+        elif map_of_ground[right(point)] == "#":
+            continue_ = False
+            return ("#", point)
+
+def go_left(point, map_of_ground):
+    continue_ = True
+    while continue_:
+        if map_of_ground[down(point)] == ".":
+            continue_ = False
+            return (".", point)
+        elif map_of_ground[left(point)] != "#":
+            point = left(point)
+            if map_of_ground[point] == ".":
+                map_of_ground[point] = "|"
+            else:
+                map_of_ground[point] = "~"
+        elif map_of_ground[left(point)] == "#":
+            continue_ = False
+            return ("#", point)
+
+def walk(point, map_of_ground):
+    x, y = point
+    if (490 <= x <= 510) and y < 14:
+        down_places = []
+        point = go_down(point, map_of_ground)
+        if point != None:
+            x, y = point
+            if (490 <= x <= 510) and y < 14:
+                continue_ = True
+                while continue_:
+                    check1, point1 = go_right(point, map_of_ground)
+                    check2, point2 = go_left(point, map_of_ground)
+                    if check1 == "#" and check2 == "#":
+                        point = up(point)
+                    else:
+                        if check1 == ".":
+                            walk(point1, map_of_ground)
+                        if check2 == ".":
+                            walk(point2, map_of_ground)
+            else:
+                return None
+        else:
+            return None
+    else:
+        return None
+
+
+
+
+
+
+
+walk(point, map_of_ground)
 p(map_of_ground)
+
+
+
+
+# def walk(point, map_of_ground):
+#     continue_ = True
+#     down_pathes = []
+#     while down_continue:
+#         if map_of_ground[down(point)] == ".":
+#             point = down(point)
+#             map_of_ground[point] = "|"
+#             # print(1)
+#         else:
+#             down_continue = False
+#             left_cont = True
+#             while left_continue:
+#                 if map_of_ground[down(point)]:
+#                     down_pathes.append(point)
+#                     left_cont = False
+#                 elif map_of_ground[left(point)] != "#":
+#                     point = left(point)
+#                     map_of_ground[point] = "~"
+#                 elif map_of_ground[left(point)] == "#":
+#                     left_continue = False
+#                     right_continue = True
+#                     while right_continue:
+#                             if map_of_ground[down(point)]:
+#                                 down_pathes.append(point)
+#                                 left_cont = False
+#                             elif map_of_ground[left(point)] != "#":
+#                                 point = left(point)
+#                                 map_of_ground[point] = "~"
 
 # for _ in range(30):
 #     if map_of_ground[x, y + 1] == ".":
